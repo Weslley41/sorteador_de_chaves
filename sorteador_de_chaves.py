@@ -14,24 +14,23 @@ def clear():
 # Recebe e faz uma lista dos jogadores.
 lista_jogadores = []
 def recebe_lista():
-	clear()
-	nome_jogador = input("Para encerrar a lista de jogadores digite 'end'\nDigite o nome do jogador:\n--| ")
-
-	if (nome_jogador in lista_jogadores):
-		print(f"O jogador {nome_jogador} já está na lista")
-		sleep(1)
-		recebe_lista()
-	elif (nome_jogador.lower() == "vazio"):
-		print("Desculpa não posso deixar você usar esse nome.")
-		sleep(1)
-		recebe_lista()
-	elif (nome_jogador.lower() == "end"):
-		print("Ok! Gerando os confrontos...")
-		sleep(2)
+	while True:
 		clear()
-	else:
-		lista_jogadores.append(nome_jogador)
-		recebe_lista()
+		nome_jogador = input("Para encerrar a lista de jogadores digite 'end'\nDigite o nome do jogador:\n--| ")
+
+		if (nome_jogador in lista_jogadores):
+			print(f"O jogador {nome_jogador} já está na lista")
+			sleep(1)
+		elif (nome_jogador.lower() == "vazio"):
+			print("Desculpa não posso deixar você usar esse nome.")
+			sleep(1)
+		elif (nome_jogador.lower() == "end"):
+			print("Ok! Gerando os confrontos...")
+			sleep(2)
+			clear()
+			break
+		else:
+			lista_jogadores.append(nome_jogador)
 
 # Define o tamanho da chave e caso precise adiciona 'jogadores' para completar.
 def tamanho_chaveamento(lista_jogadores, tamanho_da_chave = 2):
@@ -126,7 +125,11 @@ def proxima_fase(chaveamento, tamanho_da_chave):
 # Imprimir jogos da rodada no terminal
 def imprimir(chaveamento):
 	for i in range(len(chaveamento)):
-		print(f"Jogo {i+1}: {chaveamento[i][0]} x {chaveamento[i][1]}")
+		if ('vazio' in chaveamento[i]):
+			vencedor = 1 if (chaveamento[i][0] == 'vazio') else 0
+			print(f"Jogo {i + 1}: {chaveamento[i][vencedor]} passou de fase")
+		else:
+			print(f"Jogo {i + 1}: {chaveamento[i][0]} x {chaveamento[i][1]}")
 		sleep(0.3)
 	sleep(2)
 
